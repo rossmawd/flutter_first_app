@@ -60,14 +60,23 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           itemCount: 25, // Number of items (5x5 grid)
           itemBuilder: (context, index) {
-            return Container(
-              color: Colors.blueAccent,
+          return InkWell(
+            onTap: () {
+              print('Tapped on index $index');
+            },
+            focusColor: Colors.red,
+            splashColor: Colors.blue,
+            highlightColor: Colors.green,
+            child: Ink(
+              color: Colors.black,
               child: Center(
                 child: Text(
                   '$index',
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
+              
+            ),
             );
           },
         ),
