@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,11 +35,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+List<dynamic> selectedTiles = [];
 
-  void _incrementCounter() {
+
+  void handleClick(int index) {
     setState(() {
-      _counter++;
+      selectedTiles.add(index);
     });
   }
 
@@ -60,41 +62,45 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           itemCount: 25, // Number of items (5x5 grid)
           itemBuilder: (context, index) {
-          return TileWidget(index: index);
+          return TileWidget(
+              handleClick: handleClick,
+              index: index,
+              selectedTiles: selectedTiles);
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+     
     );
   }
 }
 
 class TileWidget extends StatefulWidget {
+  final void Function(int) handleClick;
   final int index;
+  final List<dynamic> selectedTiles;
 
-  const TileWidget({Key? key, required this.index}) : super(key: key);
+
+  const TileWidget(
+      {Key? key,
+      required this.handleClick,
+      required this.index,
+      required this.selectedTiles})
+      : super(key: key);
 
   @override
   State<TileWidget> createState() => _TileWidgetState();
 }
 
 class _TileWidgetState extends State<TileWidget> {
-  bool isClicked = false;
 
-  void _handleClick() {
-    setState(() {
-      isClicked = !isClicked;
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
+    bool isClicked = widget.selectedTiles.contains(widget.index);
+
     return InkWell(
       onTap: () {
-        _handleClick();
+        widget.handleClick(widget.index);
       },
       focusColor: Colors.red,
       splashColor: Colors.blue,
