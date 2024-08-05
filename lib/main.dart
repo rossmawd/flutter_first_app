@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +24,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-
   // Fields in a Widget subclass are always marked "final".
 
   final String title;
@@ -35,12 +33,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-List<dynamic> selectedTiles = [];
-
+  List<dynamic> selectedTiles = [];
 
   void handleClick(int index) {
     setState(() {
-      selectedTiles.add(index);
+      selectedTiles = List.from(selectedTiles)..add(index);
     });
   }
 
@@ -54,22 +51,21 @@ List<dynamic> selectedTiles = [];
         backgroundColor: Colors.red,
         title: Text(widget.title),
       ),
-  body: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5, // Number of columns
-            crossAxisSpacing: 4.0, // Spacing between columns
-            mainAxisSpacing: 4.0, // Spacing between rows
-          ),
-          itemCount: 25, // Number of items (5x5 grid)
-          itemBuilder: (context, index) {
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5, // Number of columns
+          crossAxisSpacing: 4.0, // Spacing between columns
+          mainAxisSpacing: 4.0, // Spacing between rows
+        ),
+        itemCount: 25, // Number of items (5x5 grid)
+        itemBuilder: (context, index) {
           return TileWidget(
-              handleClick: handleClick,
+            handleClick: handleClick,
             index: index,
             isSelected: selectedTiles.contains(index),
           );
         },
       ),
-     
     );
   }
 }
@@ -104,5 +100,3 @@ class TileWidget extends StatelessWidget {
     );
   }
 }
-
-
