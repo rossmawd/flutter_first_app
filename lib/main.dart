@@ -60,26 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           itemCount: 25, // Number of items (5x5 grid)
           itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              print('Tapped on index $index');
-            },
-            focusColor: Colors.red,
-            splashColor: Colors.blue,
-            highlightColor: Colors.green,
-            child: Ink(
-              color: Colors.black,
-              child: Center(
-                child: Text(
-                  '$index',
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-              
-            ),
-            );
-          },
-        ),
+          return TileWidget(index: index);
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
@@ -88,3 +71,44 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class TileWidget extends StatefulWidget {
+  final int index;
+
+  const TileWidget({Key? key, required this.index}) : super(key: key);
+
+  @override
+  State<TileWidget> createState() => _TileWidgetState();
+}
+
+class _TileWidgetState extends State<TileWidget> {
+  bool isClicked = false;
+
+  void _handleClick() {
+    setState(() {
+      isClicked = !isClicked;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        _handleClick();
+      },
+      focusColor: Colors.red,
+      splashColor: Colors.blue,
+      highlightColor: Colors.green,
+      child: Ink(
+        color: isClicked ? Colors.white : Colors.black,
+        child: Center(
+          child: Text(
+            '${widget.index}',
+            style: const TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
