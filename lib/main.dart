@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cat Match',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Cat Match Home page'),
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(widget.title),
       ),
       body: GridView.builder(
@@ -86,10 +86,11 @@ class TileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => handleClick(index),
-      highlightColor: Colors.red,
-      splashColor: Colors.blue,
+      highlightColor: Theme.of(context).colorScheme.secondary,
+      splashColor: Theme.of(context).colorScheme.tertiaryFixed,
       child: Ink(
-        color: isSelected ? Colors.white : Colors.black,
+        color:
+            isSelected ? Colors.white : Theme.of(context).colorScheme.tertiary,
         child: Center(
           child: Text(
             '$index',
