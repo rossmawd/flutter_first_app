@@ -64,8 +64,9 @@ List<dynamic> selectedTiles = [];
           itemBuilder: (context, index) {
           return TileWidget(
               handleClick: handleClick,
-              index: index,
-              selectedTiles: selectedTiles);
+            index: index,
+            isSelected: selectedTiles.contains(index),
+          );
         },
       ),
      
@@ -73,48 +74,35 @@ List<dynamic> selectedTiles = [];
   }
 }
 
-class TileWidget extends StatefulWidget {
+class TileWidget extends StatelessWidget {
   final void Function(int) handleClick;
   final int index;
-  final List<dynamic> selectedTiles;
+  final bool isSelected;
 
-
-  const TileWidget(
-      {Key? key,
-      required this.handleClick,
-      required this.index,
-      required this.selectedTiles})
-      : super(key: key);
-
-  @override
-  State<TileWidget> createState() => _TileWidgetState();
-}
-
-class _TileWidgetState extends State<TileWidget> {
-
-
+  const TileWidget({
+    Key? key,
+    required this.handleClick,
+    required this.index,
+    required this.isSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isClicked = widget.selectedTiles.contains(widget.index);
-
     return InkWell(
-      onTap: () {
-        widget.handleClick(widget.index);
-      },
-      focusColor: Colors.red,
+      onTap: () => handleClick(index),
+      highlightColor: Colors.red,
       splashColor: Colors.blue,
-      highlightColor: Colors.green,
       child: Ink(
-        color: isClicked ? Colors.white : Colors.black,
+        color: isSelected ? Colors.white : Colors.black,
         child: Center(
           child: Text(
-            '${widget.index}',
-            style: const TextStyle(color: Colors.white, fontSize: 18),
+            '$index',
+            style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
       ),
     );
   }
 }
+
 
