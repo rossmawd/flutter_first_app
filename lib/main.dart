@@ -51,18 +51,20 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<dynamic> selectedTiles = [];
   List<dynamic> completedTiles = [];
+  int score = 100;
 
 void handleClick(int index) {
     if (selectedTiles.contains(index) || completedTiles.contains(index)) {
       return;
     }
 
-    if (selectedTiles.length > 2) {
+    if (selectedTiles.length >= 2) {
       setState(() {
         selectedTiles = [];
       });
       return;
     }
+
     setState(() {
       selectedTiles = List.from(selectedTiles)..add(index);
     });
@@ -71,6 +73,10 @@ void handleClick(int index) {
       if (hiddenContent[selectedTiles[0]] == hiddenContent[selectedTiles[1]]) {
         setState(() {
           completedTiles = List.from(completedTiles)..addAll(selectedTiles);
+        });
+      } else {
+        setState(() {
+          score = score - 1;
         });
       }
 
@@ -81,6 +87,7 @@ void handleClick(int index) {
       });
     }
 }
+
 
 
   @override
@@ -119,7 +126,7 @@ void handleClick(int index) {
                     completedTiles = [];
                   });
                 },
-                child: const Text('You win! Play again?'),
+                child: Text('completed with score $score/100. Play again?'),
               ),
             )
         ])
