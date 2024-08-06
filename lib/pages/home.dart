@@ -23,7 +23,6 @@ class _MyHomePageState extends State<MyHomePage> {
     hiddenContent.shuffle(Random());
   }
 
-
   void handleClick(int index) {
     final GameState newState = handleTileClick(
       hiddenContent: hiddenContent,
@@ -38,6 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
       completedTiles = newState.completedTiles;
       score = newState.score;
     });
+
+    if (newState.clearSelected) {
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          selectedTiles = [];
+        });
+      });
+    }
   }
 
   @override

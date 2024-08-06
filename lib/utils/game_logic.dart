@@ -2,11 +2,14 @@ class GameState {
   final List<int> selectedTiles;
   final List<int> completedTiles;
   final int score;
+  final bool clearSelected;
+
 
   GameState({
     required this.selectedTiles,
     required this.completedTiles,
     required this.score,
+    this.clearSelected = false,
   });
 }
 
@@ -22,14 +25,15 @@ GameState handleTileClick({
       selectedTiles: selectedTiles,
       completedTiles: completedTiles,
       score: score,
-    ); // No change
+    );
   }
 
   var newSelectedTiles = List<int>.from(selectedTiles);
   var newCompletedTiles = List<int>.from(completedTiles);
   var newScore = score;
+  var clearSelected = false;
 
-  if (selectedTiles.length >= 2) {
+  if (newSelectedTiles.length >= 2) {
     newSelectedTiles.clear();
   }
 
@@ -41,6 +45,7 @@ GameState handleTileClick({
       newCompletedTiles.addAll(newSelectedTiles);
     } else {
       newScore -= 1;
+      clearSelected = true; 
     }
   }
 
@@ -48,5 +53,6 @@ GameState handleTileClick({
     selectedTiles: newSelectedTiles,
     completedTiles: newCompletedTiles,
     score: newScore,
+    clearSelected: clearSelected,
   );
 }
