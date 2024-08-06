@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math'; 
+
 
 void main() {
   runApp(const MyApp());
@@ -52,6 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
   List<dynamic> selectedTiles = [];
   List<dynamic> completedTiles = [];
   int score = 100;
+
+  @override
+  void initState() {
+    super.initState();
+    hiddenContent.shuffle(Random());
+  }
 
 void handleClick(int index) {
     if (selectedTiles.contains(index) || completedTiles.contains(index)) {
