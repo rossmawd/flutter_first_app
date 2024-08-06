@@ -4,6 +4,26 @@ void main() {
   runApp(const MyApp());
 }
 
+List<dynamic> hiddenContent = [
+  "alice",
+  "bob",
+  "carol",
+  "dave",
+  "eve",
+  "frank",
+  "grace",
+  "heidi",
+  "alice",
+  "bob",
+  "carol",
+  "dave",
+  "eve",
+  "frank",
+  "grace",
+  "heidi"
+];
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -12,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cat Match',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Cat Match Home page'),
@@ -30,11 +50,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<dynamic> selectedTiles = [];
+  List<dynamic> completedTiles = [];
 
   void handleClick(int index) {
+
+    if (selectedTiles.contains(index) || completedTiles.contains(index)) {
+      return;
+    }
     setState(() {
       selectedTiles = List.from(selectedTiles)..add(index);
     });
+
+    if (selectedTiles.length == 2) {
+      if (hiddenContent[selectedTiles[0]] == hiddenContent[selectedTiles[1]]) {
+        setState(() {
+          completedTiles = List.from(completedTiles)..addAll(selectedTiles);
+        });
+      }
+
+      setState(() {
+        selectedTiles = [];
+      });
+    }
+
+
   }
 
   @override
@@ -48,16 +87,17 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5, // Number of columns
+          crossAxisCount: 4, // Number of columns
           crossAxisSpacing: 4.0, // Spacing between columns
           mainAxisSpacing: 4.0, // Spacing between rows
         ),
-        itemCount: 25, // Number of items (5x5 grid)
+        itemCount: 16, // Number of items (5x5 grid)
         itemBuilder: (context, index) {
           return TileWidget(
             handleClick: handleClick,
             index: index,
-            isSelected: selectedTiles.contains(index),
+            isSelected:
+                selectedTiles.contains(index) || completedTiles.contains(index),
           );
         },
       ),
@@ -79,16 +119,20 @@ class TileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String hiddenString = isSelected ? hiddenContent[index] : '$index';
     return InkWell(
       onTap: () => handleClick(index),
       highlightColor: Theme.of(context).colorScheme.secondary,
       splashColor: Theme.of(context).colorScheme.tertiaryFixed,
       child: Ink(
         color:
-            isSelected ? Colors.white : Theme.of(context).colorScheme.tertiary,
+            isSelected
+            ? Theme.of(context).colorScheme.secondary
+            : Theme.of(context).colorScheme.tertiary,
         child: Center(
           child: Text(
-            '$index',
+            hiddenString,
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
