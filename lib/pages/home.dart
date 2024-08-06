@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../data/assets_data.dart';
+import '../utils/game_logic.dart';
 import '../widgets/tile_widget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -12,8 +13,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<dynamic> selectedTiles = [];
-  List<dynamic> completedTiles = [];
+  List<int> selectedTiles = [];
+  List<int> completedTiles = [];
   int score = 100;
 
   @override
@@ -22,39 +23,21 @@ class _MyHomePageState extends State<MyHomePage> {
     hiddenContent.shuffle(Random());
   }
 
-  void handleClick(int index) {
-    if (selectedTiles.contains(index) || completedTiles.contains(index)) {
-      return;
-    }
 
-    if (selectedTiles.length >= 2) {
-      setState(() {
-        selectedTiles = [];
-      });
-      return;
-    }
+  void handleClick(int index) {
+    final GameState newState = handleTileClick(
+      hiddenContent: hiddenContent,
+      selectedTiles: selectedTiles,
+      completedTiles: completedTiles,
+      index: index,
+      score: score,
+    );
 
     setState(() {
-      selectedTiles = List.from(selectedTiles)..add(index);
+      selectedTiles = newState.selectedTiles;
+      completedTiles = newState.completedTiles;
+      score = newState.score;
     });
-
-    if (selectedTiles.length == 2) {
-      if (hiddenContent[selectedTiles[0]] == hiddenContent[selectedTiles[1]]) {
-        setState(() {
-          completedTiles = List.from(completedTiles)..addAll(selectedTiles);
-        });
-      } else {
-        setState(() {
-          score = score - 1;
-        });
-      }
-
-      Future.delayed(const Duration(seconds: 1), () {
-        setState(() {
-          selectedTiles = [];
-        });
-      });
-    }
   }
 
   @override
