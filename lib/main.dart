@@ -6,23 +6,24 @@ void main() {
   runApp(const MyApp());
 }
 
+
 List<dynamic> hiddenContent = [
-  "alice",
-  "bob",
-  "carol",
-  "dave",
-  "eve",
-  "frank",
-  "grace",
-  "heidi",
-  "alice",
-  "bob",
-  "carol",
-  "dave",
-  "eve",
-  "frank",
-  "grace",
-  "heidi"
+  "assets/images/cat1.avif",
+  "assets/images/cat2.jpg",
+  "assets/images/cat3.jpg",
+  "assets/images/cat4.avif",
+  "assets/images/cat5.jpg",
+  "assets/images/cat6.jpg",
+  "assets/images/cat7.jpg",
+  "assets/images/cat8.jpeg",
+  "assets/images/cat1.avif",
+  "assets/images/cat2.jpg",
+  "assets/images/cat3.jpg",
+  "assets/images/cat4.avif",
+  "assets/images/cat5.jpg",
+  "assets/images/cat6.jpg",
+  "assets/images/cat7.jpg",
+  "assets/images/cat8.jpeg",
 ];
 
 
@@ -136,7 +137,8 @@ void handleClick(int index) {
                 },
                 child: Text('completed with score $score/100. Play again?'),
               ),
-            )
+            ),
+          // Image.asset("assets/images/cat1.avif")
         ])
     );
   }
@@ -157,7 +159,8 @@ class TileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    String hiddenString = isSelected ? hiddenContent[index] : '';
+    // String hiddenString = isSelected ? hiddenContent[index] : '';
+    String hiddenPath = isSelected ? hiddenContent[index] : '';
     return InkWell(
       onTap: () => handleClick(index),
       highlightColor: Theme.of(context).colorScheme.secondary,
@@ -168,10 +171,11 @@ class TileWidget extends StatelessWidget {
             ? Theme.of(context).colorScheme.secondary
             : Theme.of(context).colorScheme.tertiary,
         child: Center(
-          child: Text(
-            hiddenString,
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
+            // child: Text(
+            //   hiddenString,
+            //   style: TextStyle(color: Colors.white, fontSize: 18),
+            // ),
+            child: hiddenPath.isNotEmpty ? Image.asset(hiddenPath) : Text("")
         ),
       ),
     );
