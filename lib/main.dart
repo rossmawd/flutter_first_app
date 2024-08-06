@@ -52,8 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<dynamic> selectedTiles = [];
   List<dynamic> completedTiles = [];
 
-  void handleClick(int index) {
-
+void handleClick(int index) {
     if (selectedTiles.contains(index) || completedTiles.contains(index)) {
       return;
     }
@@ -68,13 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       }
 
+      Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         selectedTiles = [];
       });
+      });
     }
+}
 
-
-  }
 
   @override
   Widget build(BuildContext context) {
