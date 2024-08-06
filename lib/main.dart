@@ -157,7 +157,7 @@ class TileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    String hiddenString = isSelected ? hiddenContent[index] : '$index';
+    String hiddenString = isSelected ? hiddenContent[index] : '';
     return InkWell(
       onTap: () => handleClick(index),
       highlightColor: Theme.of(context).colorScheme.secondary,
