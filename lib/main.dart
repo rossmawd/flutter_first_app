@@ -133,6 +133,8 @@ void handleClick(int index) {
                   setState(() {
                     selectedTiles = [];
                     completedTiles = [];
+                    hiddenContent.shuffle(Random());
+                    score = 100;
                   });
                 },
                 child: Text('completed with score $score/100. Play again?'),
