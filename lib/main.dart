@@ -85,7 +85,8 @@ void handleClick(int index) {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(widget.title),
       ),
-      body: GridView.builder(
+        body: Stack(children: [
+          GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4, // Number of columns
           crossAxisSpacing: 4.0, // Spacing between columns
@@ -100,7 +101,21 @@ void handleClick(int index) {
                 selectedTiles.contains(index) || completedTiles.contains(index),
           );
         },
-      ),
+          ),
+          if (completedTiles.length == 16)
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    selectedTiles = [];
+                    completedTiles = [];
+                  });
+                },
+                child: const Text('You win! Play again?'),
+              ),
+            )
+        ])
     );
   }
 }
