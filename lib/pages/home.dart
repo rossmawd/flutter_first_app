@@ -84,6 +84,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.refresh),
+        onPressed: () {
+          setState(() {
+            selectedTiles = [];
+            completedTiles = [];
+            hiddenContent.shuffle(Random());
+            score = 100;
+          });
+        },
+      ),
     );
   }
 }
