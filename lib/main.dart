@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cat Match',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Cat Match Home page'),
@@ -54,6 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
 void handleClick(int index) {
     if (selectedTiles.contains(index) || completedTiles.contains(index)) {
+      return;
+    }
+
+    if (selectedTiles.length > 2) {
+      setState(() {
+        selectedTiles = [];
+      });
       return;
     }
     setState(() {
